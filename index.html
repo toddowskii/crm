@@ -3,933 +3,808 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CRM — NexusCRM</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <title>CRM</title>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg: #0f1117;
-      --bg2: #161820;
-      --bg3: #1e2029;
-      --bg4: #252733;
-      --border: rgba(255,255,255,0.07);
-      --border2: rgba(255,255,255,0.12);
-      --text: #e8eaf0;
-      --text2: #8b8fa8;
-      --text3: #555870;
-      --accent: #6366f1;
-      --accent2: #818cf8;
-      --accent-bg: rgba(99,102,241,0.12);
-      --green: #22c55e;
-      --green-bg: rgba(34,197,94,0.1);
-      --amber: #f59e0b;
-      --amber-bg: rgba(245,158,11,0.1);
-      --red: #ef4444;
-      --red-bg: rgba(239,68,68,0.1);
-      --blue: #3b82f6;
-      --blue-bg: rgba(59,130,246,0.1);
-      --radius: 8px;
-      --radius-lg: 12px;
-      --sidebar-w: 220px;
-      --font: 'DM Sans', sans-serif;
-      --mono: 'DM Mono', monospace;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: #fafafa;
+      color: #333;
       display: flex;
       height: 100vh;
       overflow: hidden;
-      font-size: 14px;
-      line-height: 1.5;
     }
-    /* SIDEBAR */
+    
+    /* Sidebar */
     .sidebar {
-      width: var(--sidebar-w);
-      background: var(--bg2);
-      border-right: 1px solid var(--border);
+      width: 240px;
+      background: white;
+      border-right: 1px solid #e0e0e0;
       display: flex;
       flex-direction: column;
-      flex-shrink: 0;
-      padding: 0;
+      padding: 16px 0;
+      overflow-y: auto;
     }
-    .sidebar-logo {
-      padding: 18px 20px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 600;
-      font-size: 15px;
-      letter-spacing: -0.3px;
+    
+    .sidebar h1 {
+      font-size: 18px;
+      font-weight: 700;
+      padding: 0 16px;
+      margin-bottom: 24px;
+      letter-spacing: -0.5px;
     }
-    .logo-icon {
-      width: 28px; height: 28px;
-      background: var(--accent);
-      border-radius: 7px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 13px; font-weight: 700; color: #fff;
-    }
+    
     .sidebar-section {
-      padding: 12px 12px 4px;
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.08em;
+      color: #999;
       text-transform: uppercase;
-      color: var(--text3);
+      letter-spacing: 0.8px;
+      padding: 8px 16px;
+      margin-top: 12px;
     }
+    
     .nav-item {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 8px 12px;
-      margin: 1px 8px;
-      border-radius: var(--radius);
-      color: var(--text2);
+      gap: 12px;
+      padding: 8px 16px;
+      margin: 0 8px;
+      border-radius: 4px;
+      color: #666;
+      font-size: 14px;
       cursor: pointer;
-      font-size: 13.5px;
-      font-weight: 400;
-      transition: all 0.15s;
-      user-select: none;
+      transition: background 0.15s;
     }
-    .nav-item:hover { background: var(--bg3); color: var(--text); }
-    .nav-item.active { background: var(--accent-bg); color: var(--accent2); font-weight: 500; }
-    .nav-item svg { width: 16px; height: 16px; flex-shrink: 0; opacity: 0.8; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; fill: none; }
-    .nav-item.active svg { opacity: 1; }
-    .nav-badge {
-      margin-left: auto;
-      background: var(--accent-bg);
-      color: var(--accent2);
-      font-size: 10px;
-      font-weight: 600;
-      padding: 1px 6px;
-      border-radius: 10px;
-      font-family: var(--mono);
+    
+    .nav-item:hover {
+      background: #f5f5f5;
     }
-    .sidebar-footer {
-      margin-top: auto;
-      padding: 12px;
-      border-top: 1px solid var(--border);
+    
+    .nav-item.active {
+      background: #e3f2fd;
+      color: #1976d2;
+      font-weight: 500;
     }
-    .user-row {
-      display: flex; align-items: center; gap: 10px;
-      padding: 8px;
-      border-radius: var(--radius);
-      cursor: pointer;
-    }
-    .user-row:hover { background: var(--bg3); }
-    .avatar {
-      width: 30px; height: 30px; border-radius: 50%;
-      background: linear-gradient(135deg, #6366f1, #8b5cf6);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 11px; font-weight: 600; color: #fff;
+    
+    .nav-icon {
+      width: 16px;
+      height: 16px;
       flex-shrink: 0;
     }
-    .user-name { font-size: 13px; font-weight: 500; }
-    .user-role { font-size: 11px; color: var(--text3); }
-    /* MAIN */
-    .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: var(--bg); }
-    /* TOP BAR */
+    
+    .badge {
+      margin-left: auto;
+      background: #f0f0f0;
+      color: #666;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+    
+    .nav-item.active .badge {
+      background: #1976d2;
+      color: white;
+    }
+    
+    /* Main content */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: #fafafa;
+    }
+    
+    /* Top bar */
     .topbar {
       height: 56px;
-      background: var(--bg2);
-      border-bottom: 1px solid var(--border);
+      background: white;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      gap: 12px;
+    }
+    
+    .topbar h2 {
+      font-size: 16px;
+      font-weight: 600;
+    }
+    
+    .topbar-spacer {
+      flex: 1;
+    }
+    
+    .btn {
+      padding: 8px 14px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      background: white;
+      color: #333;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    
+    .btn:hover {
+      background: #f5f5f5;
+      border-color: #ccc;
+    }
+    
+    .btn-primary {
+      background: #1976d2;
+      color: white;
+      border-color: #1976d2;
+    }
+    
+    .btn-primary:hover {
+      background: #1565c0;
+      border-color: #1565c0;
+    }
+    
+    /* Content area */
+    .content {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+    }
+    
+    .panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    
+    .left-panel {
+      width: 280px;
+      flex-shrink: 0;
+      border-right: 1px solid #e0e0e0;
+      background: white;
+      overflow-y: auto;
+      padding: 16px;
+    }
+    
+    .company-card {
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      padding: 12px;
+      margin-bottom: 16px;
+      background: #fafafa;
+    }
+    
+    .company-card-header {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    
+    .company-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 4px;
+      background: #e3f2fd;
+      color: #1976d2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    
+    .company-info h3 {
+      font-size: 14px;
+      font-weight: 600;
+    }
+    
+    .company-info p {
+      font-size: 12px;
+      color: #999;
+      margin-top: 2px;
+    }
+    
+    .field {
+      margin-bottom: 12px;
+    }
+    
+    .field-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: #999;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    
+    .field-value {
+      font-size: 13px;
+      color: #333;
+    }
+    
+    .field-value a {
+      color: #1976d2;
+      text-decoration: none;
+    }
+    
+    .field-value a:hover {
+      text-decoration: underline;
+    }
+    
+    .divider {
+      height: 1px;
+      background: #e0e0e0;
+      margin: 12px 0;
+    }
+    
+    .contact-item {
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    
+    .contact-header {
+      font-size: 11px;
+      font-weight: 600;
+      color: #999;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    
+    .contact-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    
+    .contact-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #e3f2fd;
+      color: #1976d2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+    
+    .contact-name {
+      font-size: 13px;
+      font-weight: 500;
+    }
+    
+    .contact-title {
+      font-size: 11px;
+      color: #999;
+    }
+    
+    .contact-info {
+      font-size: 11px;
+      color: #666;
+      margin-top: 6px;
+    }
+    
+    .contact-info span {
+      display: block;
+      margin: 2px 0;
+    }
+    
+    /* Right panel */
+    .right-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: white;
+    }
+    
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid #e0e0e0;
+      background: white;
+      padding: 0 16px;
+    }
+    
+    .tab {
+      padding: 12px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #666;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    
+    .tab:hover {
+      color: #333;
+    }
+    
+    .tab.active {
+      color: #1976d2;
+      border-bottom-color: #1976d2;
+    }
+    
+    .tab-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+    }
+    
+    /* Cards and lists */
+    .section-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    
+    .stat-card {
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      padding: 16px;
+      margin-bottom: 16px;
+      background: white;
+    }
+    
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    
+    .stat {
+      background: #f5f5f5;
+      border-radius: 4px;
+      padding: 12px;
+    }
+    
+    .stat-label {
+      font-size: 11px;
+      color: #999;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    
+    .stat-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: #333;
+    }
+    
+    .stat-sub {
+      font-size: 12px;
+      color: #999;
+      margin-top: 4px;
+    }
+    
+    .opportunity-item {
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 0 20px;
-      flex-shrink: 0;
+      padding: 10px;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      margin-bottom: 8px;
     }
-    .back-btn {
-      display: flex; align-items: center; gap: 5px;
-      color: var(--text2);
-      font-size: 13px;
-      cursor: pointer;
-      padding: 5px 8px;
-      border-radius: var(--radius);
-      transition: all 0.15s;
-    }
-    .back-btn:hover { background: var(--bg3); color: var(--text); }
-    .topbar-title { font-size: 16px; font-weight: 600; letter-spacing: -0.3px; }
-    .topbar-tags { display: flex; gap: 6px; margin-left: 8px; }
-    .tag {
-      font-size: 11px; font-weight: 500;
-      padding: 2px 9px;
-      border-radius: 10px;
-      border: 1px solid var(--border2);
-      color: var(--text2);
-      cursor: pointer;
-    }
-    .tag.vip { background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.3); color: var(--amber); }
-    .tag.usa { background: var(--blue-bg); border-color: rgba(59,130,246,0.3); color: var(--blue); }
-    .topbar-actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
-    .btn {
-      padding: 6px 14px;
-      border-radius: var(--radius);
+    
+    .opp-name {
+      flex: 1;
       font-size: 13px;
       font-weight: 500;
-      cursor: pointer;
-      border: none;
-      transition: all 0.15s;
-      font-family: var(--font);
     }
-    .btn-primary { background: var(--accent); color: #fff; }
-    .btn-primary:hover { background: #5254cc; }
-    .btn-ghost {
-      background: transparent;
-      border: 1px solid var(--border2);
-      color: var(--text2);
+    
+    .opp-amount {
+      font-size: 13px;
+      font-weight: 600;
+      color: #333;
     }
-    .btn-ghost:hover { background: var(--bg3); color: var(--text); }
-    /* CONTENT */
-    .content { flex: 1; display: flex; overflow: hidden; }
-    /* LEFT PANEL */
-    .left-panel {
-      width: 260px;
-      flex-shrink: 0;
-      border-right: 1px solid var(--border);
-      overflow-y: auto;
-      padding: 16px;
-      background: var(--bg);
+    
+    .badge-stage {
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      background: #f0f0f0;
+      color: #666;
     }
-    .company-header {
-      display: flex; align-items: center; gap: 12px;
-      padding: 12px;
-      background: var(--bg2);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
+    
+    .timeline-item {
+      display: flex;
+      gap: 12px;
       margin-bottom: 16px;
     }
-    .company-logo {
-      width: 40px; height: 40px;
-      border-radius: 10px;
-      background: var(--accent-bg);
-      border: 1px solid rgba(99,102,241,0.3);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 14px; font-weight: 700; color: var(--accent2);
-    }
-    .company-name { font-size: 13.5px; font-weight: 600; }
-    .company-sub { font-size: 11px; color: var(--text3); margin-top: 1px; }
-    .field-group { margin-bottom: 14px; }
-    .field-label { font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text3); margin-bottom: 5px; }
-    .field-value { font-size: 13px; color: var(--text); }
-    .field-value a { color: var(--accent2); text-decoration: none; }
-    .field-value a:hover { text-decoration: underline; }
-    .field-value.pill {
-      display: inline-flex; align-items: center;
-      padding: 2px 10px;
-      border-radius: 10px;
-      font-size: 12px;
-    }
-    .pill-partner { background: var(--accent-bg); color: var(--accent2); }
-    .pill-consulting { background: var(--green-bg); color: var(--green); }
-    .pill-vip { background: var(--amber-bg); color: var(--amber); }
-    .divider { height: 1px; background: var(--border); margin: 14px 0; }
-    .contact-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 12px;
-    }
-    .contact-card-header {
-      display: flex; justify-content: space-between; align-items: center;
-      font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
-      color: var(--text3); margin-bottom: 10px;
-    }
-    .contact-row { display: flex; align-items: center; gap: 10px; }
-    .contact-avatar {
-      width: 36px; height: 36px; border-radius: 50%;
-      background: var(--blue-bg);
-      border: 1px solid rgba(59,130,246,0.3);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 12px; font-weight: 600; color: var(--blue);
+    
+    .timeline-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #1976d2;
+      margin-top: 6px;
       flex-shrink: 0;
     }
-    .contact-name { font-size: 13px; font-weight: 500; }
-    .contact-meta { font-size: 11px; color: var(--text3); margin-top: 1px; }
-    .contact-info { margin-top: 10px; }
-    .contact-info-row { display: flex; gap: 6px; font-size: 12px; color: var(--text2); padding: 3px 0; }
-    .contact-info-row span:first-child { color: var(--text3); width: 70px; flex-shrink: 0; }
-    /* RIGHT PANEL */
-    .right-panel { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: var(--bg); }
-    /* TABS */
-    .tabs {
-      display: flex;
-      gap: 2px;
-      padding: 0 20px;
-      border-bottom: 1px solid var(--border);
-      background: var(--bg);
-      flex-shrink: 0;
-    }
-    .tab {
-      padding: 14px 14px 12px;
-      font-size: 12.5px;
-      font-weight: 500;
-      color: var(--text3);
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      transition: all 0.15s;
-      user-select: none;
-      white-space: nowrap;
-    }
-    .tab:hover { color: var(--text2); }
-    .tab.active { color: var(--accent2); border-bottom-color: var(--accent); }
-    /* TAB CONTENT */
-    .tab-content { flex: 1; overflow-y: auto; padding: 20px; }
-    /* ANALYTICS */
-    .analytics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .analytics-grid.full { grid-template-columns: 1fr; }
-    .stat-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 16px;
-    }
-    .stat-card-title {
-      font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
-      color: var(--text3); margin-bottom: 12px; display: flex; align-items: center; gap: 6px;
-    }
-    .stat-dot { width: 7px; height: 7px; border-radius: 50%; }
-    .stat-num { font-size: 26px; font-weight: 600; letter-spacing: -0.5px; color: var(--text); font-family: var(--mono); }
-    .stat-num span { font-size: 14px; font-weight: 400; color: var(--text3); }
-    .stat-sub { font-size: 12px; color: var(--text3); margin-top: 4px; }
-    .stat-badge {
-      display: inline-flex; align-items: center; gap: 3px;
-      font-size: 11px; font-weight: 500;
-      padding: 2px 7px; border-radius: 6px; margin-top: 6px;
-    }
-    .badge-up { background: var(--green-bg); color: var(--green); }
-    .badge-down { background: var(--red-bg); color: var(--red); }
-    /* BAR CHART */
-    .bar-chart { display: flex; align-items: flex-end; gap: 6px; height: 80px; margin-top: 12px; }
-    .bar-col { display: flex; flex-direction: column; align-items: center; gap: 3px; flex: 1; }
-    .bar {
-      width: 100%; border-radius: 4px 4px 0 0;
-      transition: opacity 0.15s;
-      cursor: pointer;
-    }
-    .bar:hover { opacity: 0.8; }
-    .bar-label { font-size: 9px; color: var(--text3); font-family: var(--mono); }
-    /* PIPELINE */
-    .pipeline { display: flex; gap: 10px; margin-top: 16px; }
-    .pipeline-stage {
+    
+    .timeline-body {
       flex: 1;
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 10px;
     }
-    .pipeline-stage-name { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
-    .pipeline-count { font-size: 22px; font-weight: 600; font-family: var(--mono); color: var(--text); }
-    .pipeline-bar { height: 3px; border-radius: 2px; margin-top: 8px; background: var(--bg4); overflow: hidden; }
-    .pipeline-fill { height: 100%; border-radius: 2px; }
-    /* LEAD CARD */
-    .lead-item {
-      display: flex; align-items: center; gap: 12px;
-      padding: 10px 12px;
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      margin-bottom: 8px;
-      cursor: pointer;
-      transition: all 0.15s;
+    
+    .timeline-title {
+      font-size: 13px;
+      font-weight: 500;
     }
-    .lead-item:hover { border-color: var(--border2); background: var(--bg3); }
-    .lead-avatar {
-      width: 32px; height: 32px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 11px; font-weight: 600;
-      flex-shrink: 0;
+    
+    .timeline-desc {
+      font-size: 12px;
+      color: #999;
+      margin-top: 2px;
     }
-    .lead-name { font-size: 13px; font-weight: 500; }
-    .lead-company { font-size: 11px; color: var(--text3); }
-    .lead-status {
-      margin-left: auto;
-      font-size: 11px; font-weight: 500;
-      padding: 2px 8px; border-radius: 6px;
+    
+    .timeline-time {
+      font-size: 11px;
+      color: #ccc;
+      margin-top: 4px;
     }
-    .status-hot { background: var(--red-bg); color: var(--red); }
-    .status-warm { background: var(--amber-bg); color: var(--amber); }
-    .status-cold { background: var(--blue-bg); color: var(--blue); }
-    .status-new { background: var(--accent-bg); color: var(--accent2); }
-    .lead-amount { font-size: 12px; font-weight: 500; color: var(--text2); margin-left: 8px; font-family: var(--mono); }
-    /* TIMELINE */
-    .timeline-item { display: flex; gap: 14px; margin-bottom: 18px; position: relative; }
-    .timeline-line { position: absolute; left: 11px; top: 22px; bottom: -18px; width: 1px; background: var(--border); }
-    .timeline-dot { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 10px; }
-    .timeline-body { flex: 1; }
-    .timeline-title { font-size: 13px; font-weight: 500; }
-    .timeline-desc { font-size: 12px; color: var(--text3); margin-top: 2px; }
-    .timeline-time { font-size: 11px; color: var(--text3); margin-top: 4px; font-family: var(--mono); }
-    /* COMMUNICATION */
-    .comm-item {
-      padding: 12px 14px;
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      margin-bottom: 8px;
-    }
-    .comm-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-    .comm-type { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; }
-    .comm-date { font-size: 11px; color: var(--text3); font-family: var(--mono); }
-    .comm-subject { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
-    .comm-preview { font-size: 12px; color: var(--text3); }
-    /* SALES */
-    .opportunity-row {
-      display: flex; align-items: center; gap: 12px;
-      padding: 10px 14px;
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      margin-bottom: 8px;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .opportunity-row:hover { border-color: var(--border2); }
-    .opp-name { font-size: 13px; font-weight: 500; flex: 1; }
-    .opp-stage { font-size: 11px; padding: 2px 8px; border-radius: 6px; }
-    .opp-amount { font-size: 13px; font-weight: 500; font-family: var(--mono); color: var(--text2); }
-    .opp-prob { font-size: 11px; color: var(--text3); }
-    .progress-mini { height: 3px; border-radius: 2px; background: var(--bg4); overflow: hidden; width: 60px; }
-    .progress-fill { height: 100%; border-radius: 2px; background: var(--accent); }
-    /* SCROLLBAR */
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 4px; }
-    /* SECTION HEADER */
-    .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
-    .section-title { font-size: 13px; font-weight: 600; color: var(--text); }
-    .section-action { font-size: 12px; color: var(--accent2); cursor: pointer; }
-    /* NEWS */
-    .news-item { padding: 12px 0; border-bottom: 1px solid var(--border); }
-    .news-item:last-child { border-bottom: none; }
-    .news-source { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
-    .news-headline { font-size: 13px; font-weight: 500; margin: 4px 0; }
-    .news-date { font-size: 11px; color: var(--text3); font-family: var(--mono); }
-    /* QUICK SEARCH */
-    .search-bar {
-      display: flex; align-items: center; gap: 8px;
-      background: var(--bg3); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 6px 12px;
-      margin: 0 20px 0 auto;
-      width: 200px;
-    }
-    .search-bar input { background: none; border: none; outline: none; color: var(--text); font-size: 13px; width: 100%; font-family: var(--font); }
-    .search-bar input::placeholder { color: var(--text3); }
-    .icon-btn {
-      width: 32px; height: 32px; border-radius: var(--radius);
-      background: var(--bg3); border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; color: var(--text2); transition: all 0.15s;
-    }
-    .icon-btn:hover { background: var(--bg4); color: var(--text); }
-    svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
   </style>
 </head>
 <body>
 
-<!-- SIDEBAR -->
+<!-- Sidebar -->
 <aside class="sidebar">
-  <div class="sidebar-logo">
-    <div class="logo-icon">N</div>
-    NexusCRM
-  </div>
-
-  <div class="sidebar-section">Main</div>
-  <div class="nav-item" data-page="dashboard">
-    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-    Dashboard
-  </div>
-  <div class="nav-item active" data-page="accounts">
-    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+  <h1>📊 CRM</h1>
+  
+  <div class="sidebar-section">Navigation</div>
+  <div class="nav-item active" onclick="goToPage('accounts')">
+    <span class="nav-icon">👥</span>
     Accounts
-    <span class="nav-badge">248</span>
+    <span class="badge">248</span>
   </div>
-  <div class="nav-item" data-page="contacts">
-    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+  <div class="nav-item" onclick="goToPage('leads')">
+    <span class="nav-icon">🔥</span>
+    Leads
+    <span class="badge">12</span>
+  </div>
+  <div class="nav-item" onclick="goToPage('contacts')">
+    <span class="nav-icon">📋</span>
     Contacts
   </div>
-  <div class="nav-item" data-page="leads">
-    <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-    Leads
-    <span class="nav-badge">12</span>
-  </div>
-
-  <div class="sidebar-section">Sales</div>
-  <div class="nav-item" data-page="opportunities">
-    <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+  <div class="nav-item" onclick="goToPage('opportunities')">
+    <span class="nav-icon">💰</span>
     Opportunities
   </div>
-  <div class="nav-item" data-page="orders">
-    <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>
-    Orders
-  </div>
-  <div class="nav-item" data-page="invoices">
-    <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-    Invoices
-  </div>
-
-  <div class="sidebar-section">Support</div>
-  <div class="nav-item" data-page="activities">
-    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-    Activities
-  </div>
-  <div class="nav-item" data-page="cases">
-    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-    Cases
-    <span class="nav-badge" style="background:var(--red-bg);color:var(--red)">5</span>
-  </div>
-  <div class="nav-item" data-page="contracts">
-    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-    Contracts
-  </div>
-
-  <div class="sidebar-footer">
-    <div class="user-row">
-      <div class="avatar">AL</div>
-      <div>
-        <div class="user-name">Andy Lloyd</div>
-        <div class="user-role">Sales Manager</div>
-      </div>
-    </div>
+  
+  <div class="sidebar-section">Settings</div>
+  <div class="nav-item" onclick="goToPage('settings')">
+    <span class="nav-icon">⚙️</span>
+    Settings
   </div>
 </aside>
 
-<!-- MAIN DYNAMIC AREA -->
-<main id="main-area" class="main"></main>
+<!-- Main content -->
+<main class="main">
+  <div class="topbar">
+    <h2 id="page-title">Accounts</h2>
+    <div class="topbar-spacer"></div>
+    <input type="text" placeholder="Search..." style="padding: 6px 10px; border: 1px solid #ddd; border-radius: 4px; width: 160px;">
+    <button class="btn btn-primary">+ New</button>
+  </div>
+  
+  <div class="content" id="content-area">
+    <!-- Left panel and right panel will be rendered here -->
+  </div>
+</main>
 
 <script>
-/* PAGE DATA AND RENDERING */
+// Simple SPA routing
 const pages = {
-  dashboard: {
-    html: `
-    <div class="topbar">
-      <div class="topbar-title">Dashboard</div>
-      <div class="search-bar">
-        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" placeholder="Search...">
-      </div>
-      <div class="topbar-actions" style="margin-left:auto">
-        <button class="btn btn-primary">+ New Record</button>
-      </div>
-    </div>
-    <div class="tab-content">
-      <div class="analytics-grid full" id="dashboard-analytics"></div>
-    </div>
-    `,
-    afterRender: renderDashboard
-  },
-  accounts: {
-    html: function(){
-      return `
-      <div class="topbar">
-        <div class="back-btn">
-          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-          Accounts
-        </div>
-        <div style="width:1px;height:20px;background:var(--border)"></div>
-        <div class="topbar-title">OptimasYs Technologies</div>
-        <div class="topbar-tags">
-          <span class="tag vip">VIP</span>
-          <span class="tag usa">USA</span>
-          <span class="tag">4 Level</span>
-        </div>
-        <div class="search-bar">
-          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" placeholder="Search...">
-        </div>
-        <div class="topbar-actions">
-          <button class="btn btn-ghost">Show on map</button>
-          <button class="btn btn-primary">+ Add Activity</button>
-        </div>
-      </div>
-      <div class="content" style="height:calc(100% - 56px);display:flex;overflow:hidden">
-        <div class="left-panel">` + getAccountsLeftPanel() + `</div>
-        <div class="right-panel">
-          <div class="tabs" id="accounts-tabs"></div>
-          <div class="tab-content" id="accounts-tab-content"></div>
-        </div>
-      </div>
-      `;
-    },
-    afterRender: () => renderAccountsTabs('analytics')
-  },
-  contacts: {
-    html: `<div class="topbar"><div class="topbar-title">Contacts</div></div><div class="tab-content"><div style="color:var(--text3)">Contacts page…</div></div>`
-  },
-  leads: {
-    html: `<div class="topbar"><div class="topbar-title">Leads</div></div><div class="tab-content"><div style="color:var(--text3)">Leads page…</div></div>`
-  },
-  opportunities: {
-    html: `<div class="topbar"><div class="topbar-title">Opportunities</div></div><div class="tab-content"><div style="color:var(--text3)">Opportunities…</div></div>`
-  },
-  orders: {
-    html: `<div class="topbar"><div class="topbar-title">Orders</div></div><div class="tab-content"><div style="color:var(--text3)">Orders…</div></div>`
-  },
-  invoices: {
-    html: `<div class="topbar"><div class="topbar-title">Invoices</div></div><div class="tab-content"><div style="color:var(--text3)">Invoices…</div></div>`
-  },
-  activities: {
-    html: `<div class="topbar"><div class="topbar-title">Activities</div></div><div class="tab-content"><div style="color:var(--text3)">Activities…</div></div>`
-  },
-  cases: {
-    html: `<div class="topbar"><div class="topbar-title">Cases</div></div><div class="tab-content"><div style="color:var(--text3)">Cases…</div></div>`
-  },
-  contracts: {
-    html: `<div class="topbar"><div class="topbar-title">Contracts</div></div><div class="tab-content"><div style="color:var(--text3)">Contracts…</div></div>`
-  }
+  accounts: renderAccountsPage,
+  leads: renderLeadsPage,
+  contacts: renderContactsPage,
+  opportunities: renderOpportunitiesPage,
+  settings: renderSettingsPage
 };
 
-function getAccountsLeftPanel() {
-  return `
-    <div class="company-header">
-      <div class="company-logo">OT</div>
-      <div>
-        <div class="company-name">OptimasYs Tech.</div>
-        <div class="company-sub">5:20 PM · United States</div>
+function goToPage(page) {
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  document.querySelector(`[onclick="goToPage('${page}')"]`).classList.add('active');
+  
+  const title = {
+    accounts: 'OptimasYs Technologies',
+    leads: 'Active Leads',
+    contacts: 'Contacts',
+    opportunities: 'Sales Pipeline',
+    settings: 'Settings'
+  }[page];
+  
+  document.getElementById('page-title').textContent = title;
+  
+  if (pages[page]) pages[page]();
+}
+
+function renderAccountsPage() {
+  const html = `
+    <div class="left-panel">
+      <div class="company-card">
+        <div class="company-card-header">
+          <div class="company-avatar">OT</div>
+          <div class="company-info">
+            <h3>OptimasYs Tech.</h3>
+            <p>United States</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="field">
+        <div class="field-label">Account Owner</div>
+        <div class="field-value">Sarah Johnson</div>
+      </div>
+      
+      <div class="field">
+        <div class="field-label">Industry</div>
+        <div class="field-value">Consulting</div>
+      </div>
+      
+      <div class="field">
+        <div class="field-label">Website</div>
+        <div class="field-value"><a href="#">www.ost.com</a></div>
+      </div>
+      
+      <div class="field">
+        <div class="field-label">Phone</div>
+        <div class="field-value">+1 212 854 75 12</div>
+      </div>
+      
+      <div class="divider"></div>
+      
+      <div class="contact-item">
+        <div class="contact-header">Primary Contact</div>
+        <div class="contact-row">
+          <div class="contact-avatar">AW</div>
+          <div>
+            <div class="contact-name">Alexander Wilson</div>
+            <div class="contact-title">CEO</div>
+          </div>
+        </div>
+        <div class="contact-info">
+          <span>📧 a.wilson@ost.com</span>
+          <span>📱 +1 212 555 0133</span>
+        </div>
       </div>
     </div>
-    <div class="field-group"><div class="field-label">Owner</div><div class="field-value" style="display:flex;align-items:center;gap:7px"><div class="avatar" style="width:22px;height:22px;font-size:9px">AL</div>Andy Lloyd</div></div>
-    <div class="field-group"><div class="field-label">Type</div><div class="field-value pill pill-partner">Partner</div></div>
-    <div class="field-group"><div class="field-label">Industry</div><div class="field-value pill pill-consulting">Consulting</div></div>
-    <div class="field-group"><div class="field-label">Account Tier</div><div class="field-value pill pill-vip">VIP · 4 Level</div></div>
-    <div class="field-group"><div class="field-label">Website</div><div class="field-value"><a href="#">www.ost.com</a></div></div>
-    <div class="field-group"><div class="field-label">LinkedIn</div><div class="field-value"><a href="#">linkedin.com/company/optimas</a></div></div>
-    <div class="field-group"><div class="field-label">Primary Phone</div><div class="field-value">+1 212 854 75 12</div></div>
-    <div class="field-group"><div class="field-label">Primary Email</div><div class="field-value"><a href="#">info@ost.com</a></div></div>
-    <div class="divider"></div>
-    <div class="contact-card"><div class="contact-card-header">
-      Primary Contact
-      <svg style="width:13px;height:13px" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+    
+    <div class="right-panel">
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab(this, 'analytics')">Overview</div>
+        <div class="tab" onclick="switchTab(this, 'timeline')">Timeline</div>
+        <div class="tab" onclick="switchTab(this, 'opportunities')">Opportunities</div>
+      </div>
+      
+      <div class="tab-content" id="tab-content">
+        <div class="stat-grid">
+          <div class="stat">
+            <div class="stat-label">Annual Revenue</div>
+            <div class="stat-value">$2.4M</div>
+            <div class="stat-sub">+12% vs last year</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Total Deals</div>
+            <div class="stat-value">4</div>
+            <div class="stat-sub">2 active</div>
+          </div>
+        </div>
+        
+        <div class="section-title">Open Opportunities</div>
+        <div class="opportunity-item">
+          <div class="opp-name">Enterprise License Renewal</div>
+          <div class="badge-stage">Proposal</div>
+          <div class="opp-amount">$128K</div>
+        </div>
+        <div class="opportunity-item">
+          <div class="opp-name">Implementation Services</div>
+          <div class="badge-stage">Negotiation</div>
+          <div class="opp-amount">$48K</div>
+        </div>
+      </div>
     </div>
-    <div class="contact-row"><div class="contact-avatar">AW</div><div><div class="contact-name">Alexander Wilson</div><div class="contact-meta">CEO · United States</div></div></div>
-    <div class="contact-info"><div class="contact-info-row"><span>Born</span><span>20 May 1988 · 37</span></div>
-      <div class="contact-info-row"><span>Title</span><span>CEO</span></div>
-      <div class="contact-info-row"><span>Phone</span><span style="color:var(--accent2)">+1 212 555 0133</span></div>
-      <div class="contact-info-row"><span>Email</span><span style="color:var(--accent2)">a.wilson@ost.com</span></div>
-    </div></div>
   `;
+  
+  document.getElementById('content-area').innerHTML = html;
 }
 
-const accountsTabs = [
-  {id:"analytics",name:"Analytics"},
-  {id:"timeline",name:"Timeline"},
-  {id:"communication",name:"Communication"},
-  {id:"sales",name:"Sales"},
-  {id:"leads",name:"Leads"},
-  {id:"service",name:"Service"},
-  {id:"news",name:"News"}
-];
-
-const accountsTabContents = {
-  analytics: `<div class="analytics-grid" id="analytics-main"></div>`,
-  timeline: `<div class="section-header"><div class="section-title">Activity Timeline</div><button class="btn btn-ghost" style="font-size:12px;padding:5px 10px">+ Log Activity</button></div><div id="timeline-items"></div>`,
-  communication: `<div class="section-header"><div class="section-title">Communications</div><button class="btn btn-ghost" style="font-size:12px;padding:5px 10px">Compose</button></div><div id="comm-items"></div>`,
-  sales: `<div class="section-header"><div class="section-title">Open Opportunities</div><span class="section-action">View all →</span></div><div id="opp-items"></div><div style="margin-top:20px"><div class="section-header"><div class="section-title">Pipeline Overview</div></div><div class="pipeline" id="pipeline"></div></div>`,
-  leads: `<div class="section-header"><div class="section-title">Leads</div><button class="btn btn-primary" style="font-size:12px;padding:5px 12px">+ New Lead</button></div><div id="lead-items"></div>`,
-  service: `<div class="section-header"><div class="section-title">Open Cases</div></div><div id="service-items"></div>`,
-  news: `<div class="section-header"><div class="section-title">Company News</div></div><div id="news-items"></div>`
-};
-
-function renderPage(pageKey) {
-  const page = pages[pageKey];
-  if (!page) return;
-  document.querySelectorAll('.nav-item').forEach(x => x.classList.remove('active'));
-  let matching = document.querySelector('.nav-item[data-page="'+pageKey+'"]');
-  if (matching) matching.classList.add('active');
-  const main = document.getElementById('main-area');
-  main.innerHTML = typeof page.html === 'function' ? page.html() : page.html;
-  if (page.afterRender) setTimeout(()=>page.afterRender(), 1);
-}
-
-function renderAccountsTabs(tabId) {
-  const tabStrip = document.getElementById('accounts-tabs');
-  if (!tabStrip) return;
-  tabStrip.innerHTML = accountsTabs.map(tab =>
-    `<div class="tab${tab.id===tabId?' active':''}" data-tab="${tab.id}">${tab.name}</div>`
-  ).join('');
-  document.getElementById('accounts-tab-content').innerHTML = accountsTabContents[tabId];
-  tabStrip.querySelectorAll('.tab').forEach(tab =>
-    tab.onclick = () => renderAccountsTabs(tab.getAttribute('data-tab'))
-  );
-  setTimeout(()=>afterAccountsTabRender(tabId), 1);
-}
-
-function afterAccountsTabRender(tabId) {
-  if(tabId==='analytics') renderAnalyticsCharts('accounts');
-  if(tabId==='timeline') renderTimeline();
-  if(tabId==='communication') renderComms();
-  if(tabId==='sales') { renderOpps(); renderPipeline(); }
-  if(tabId==='leads') renderLeads();
-  if(tabId==='service') renderService();
-  if(tabId==='news') renderNews();
-}
-
-function renderAnalyticsCharts(source) {
-  const elem = document.getElementById(source==='accounts' ? 'analytics-main' : 'dashboard-analytics');
-  if (!elem) return;
-  elem.innerHTML = `
-    <div class="stat-card" style="grid-column:1/-1">
-      <div class="stat-card-title"><div class="stat-dot" style="background:var(--accent)"></div>Sales Performance</div>
-      <div style="display:grid;grid-template-columns:200px 1fr;gap:20px;align-items:start">
-        <div>
-          <div class="stat-num">$234,924<span>.00</span></div>
-          <div class="stat-sub">Total opportunity amount</div>
-          <div class="stat-badge badge-up">↑ 14.2% vs last quarter</div>
-          <div style="margin-top:14px"><div class="stat-sub" style="margin-bottom:4px">Orders in progress</div><div style="font-size:20px;font-weight:600;font-family:var(--mono)">100</div></div>
-          <div style="margin-top:10px"><div class="stat-sub" style="margin-bottom:4px">Pending payments</div><div style="font-size:20px;font-weight:600;font-family:var(--mono)">76</div></div>
+function renderLeadsPage() {
+  const html = `
+    <div class="left-panel">
+      <p style="color: #999; font-size: 13px; text-align: center; padding: 20px;">No lead selected</p>
+    </div>
+    
+    <div class="right-panel">
+      <div class="tabs">
+        <div class="tab active">All Leads</div>
+      </div>
+      
+      <div class="tab-content">
+        <div class="section-title">Hot Leads</div>
+        <div style="border: 1px solid #e0e0e0; border-radius: 4px; padding: 12px; margin-bottom: 12px;">
+          <div style="font-weight: 500;">Sarah Chen - Nexus Digital</div>
+          <div style="font-size: 12px; color: #999; margin-top: 4px;">$45K opportunity</div>
         </div>
-        <div>
-          <div style="font-size:11px;color:var(--text3);margin-bottom:8px;display:flex;gap:14px">
-            <span style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:2px;background:var(--accent);display:inline-block"></span>Created</span>
-            <span style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:2px;background:var(--red);display:inline-block"></span>Closed lost</span>
-            <span style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:2px;background:var(--green);display:inline-block"></span>Closed won</span>
+        
+        <div class="section-title" style="margin-top: 20px;">Warm Leads</div>
+        <div style="border: 1px solid #e0e0e0; border-radius: 4px; padding: 12px; margin-bottom: 12px;">
+          <div style="font-weight: 500;">Marcus Reid - Altitude SaaS</div>
+          <div style="font-size: 12px; color: #999; margin-top: 4px;">$28K opportunity</div>
+        </div>
+        <div style="border: 1px solid #e0e0e0; border-radius: 4px; padding: 12px;">
+          <div style="font-weight: 500;">Priya Nair - CloudBridge Inc.</div>
+          <div style="font-size: 12px; color: #999; margin-top: 4px;">$62K opportunity</div>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  document.getElementById('content-area').innerHTML = html;
+}
+
+function renderContactsPage() {
+  const html = `
+    <div class="right-panel" style="border: none;">
+      <div class="tabs">
+        <div class="tab active">Contacts</div>
+      </div>
+      
+      <div class="tab-content">
+        <div class="section-title">All Contacts</div>
+        <div style="font-size: 13px; color: #999;">No contacts to display</div>
+      </div>
+    </div>
+  `;
+  
+  document.getElementById('content-area').innerHTML = html;
+}
+
+function renderOpportunitiesPage() {
+  const html = `
+    <div class="right-panel" style="border: none;">
+      <div class="tabs">
+        <div class="tab active">Pipeline</div>
+      </div>
+      
+      <div class="tab-content">
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;">
+          <div style="border: 1px solid #e0e0e0; border-radius: 4px; padding: 12px;">
+            <div style="font-size: 12px; font-weight: 600; color: #999; margin-bottom: 8px;">DISCOVERY</div>
+            <div style="font-size: 20px; font-weight: 700;">3</div>
           </div>
-          <div class="bar-chart" id="salesChart"></div>
-          <div style="display:flex;gap:6px;margin-top:4px" id="salesLabels"></div>
-        </div>
-      </div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-card-title"><div class="stat-dot" style="background:var(--green)"></div>Leads</div>
-      <div style="display:flex;gap:20px">
-        <div>
-          <div class="stat-sub">Open leads</div>
-          <div class="stat-num" style="font-size:20px">88</div>
-          <div style="margin-top:10px"><div class="stat-sub">Lead budget avg</div><div style="font-size:16px;font-weight:600;font-family:var(--mono);color:var(--text)">$937.50</div></div>
-        </div>
-        <div style="flex:1">
-          <div style="font-size:11px;color:var(--text3);margin-bottom:6px">Leads by Stage</div>
-          <div class="bar-chart" style="height:60px" id="leadsChart"></div>
-        </div>
-      </div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-card-title"><div class="stat-dot" style="background:var(--amber)"></div>Cases</div>
-      <div style="display:flex;gap:16px;align-items:start">
-        <div>
-          <div class="stat-sub">Last month</div>
-          <div class="stat-num" style="font-size:20px">10</div>
-          <div class="stat-badge badge-down" style="margin-top:4px">1 error</div>
-          <div style="margin-top:10px"><div class="stat-sub">Avg resolution</div><div style="font-size:15px;font-weight:600;font-family:var(--mono);color:var(--text)">2.4 days</div></div>
-        </div>
-        <div style="flex:1">
-          <div style="font-size:11px;color:var(--text3);margin-bottom:8px">By Source</div>
-          <div style="display:flex;flex-direction:column;gap:8px">
-            <div><div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-bottom:3px"><span>Email</span><span>66%</span></div><div style="height:4px;background:var(--bg4);border-radius:2px"><div style="height:100%;width:66%;background:var(--accent);border-radius:2px"></div></div></div>
-            <div><div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-bottom:3px"><span>Phone</span><span>20%</span></div><div style="height:4px;background:var(--bg4);border-radius:2px"><div style="height:100%;width:20%;background:var(--blue);border-radius:2px"></div></div></div>
-            <div><div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-bottom:3px"><span>Portal</span><span>14%</span></div><div style="height:4px;background:var(--bg4);border-radius:2px"><div style="height:100%;width:14%;background:var(--amber);border-radius:2px"></div></div></div>
+          <div style="border: 1px solid #e0e0e0; border-radius: 4px; padding: 12px;">
+            <div style="font-size: 12px; font-weight: 600; color: #999; margin-bottom: 8px;">PROPOSAL</div>
+            <div style="font-size: 20px; font-weight: 700;">2</div>
+          </div>
+          <div style="border: 1px solid #e0e0e0; border-radius: 4px; padding: 12px;">
+            <div style="font-size: 12px; font-weight: 600; color: #999; margin-bottom: 8px;">NEGOTIATION</div>
+            <div style="font-size: 20px; font-weight: 700;">1</div>
+          </div>
+          <div style="border: 1px solid #e0e0e0; border-radius: 4px; padding: 12px;">
+            <div style="font-size: 12px; font-weight: 600; color: #999; margin-bottom: 8px;">CLOSING</div>
+            <div style="font-size: 20px; font-weight: 700;">1</div>
           </div>
         </div>
       </div>
     </div>
-    `;
+  `;
+  
+  document.getElementById('content-area').innerHTML = html;
+}
 
-  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  const created = [25,23,22,21,16,26,28,24,18,40,27,28];
-  const lost = [17,13,8,6,16,22,28,15,14,36,23,21];
-  const won = [8,10,14,15,0,4,0,9,4,4,4,7];
-  const salesChart = document.getElementById('salesChart');
-  const salesLabels = document.getElementById('salesLabels');
-  const maxV = Math.max(...created);
-  months.forEach((m, i) => {
-    const col = document.createElement('div');
-    col.className = 'bar-col';
-    col.innerHTML = `
-      <div style="display:flex;gap:2px;align-items:flex-end;height:68px">
-        <div class="bar" style="height:${(created[i]/maxV*100)}%;background:var(--accent);opacity:0.85;width:7px"></div>
-        <div class="bar" style="height:${(lost[i]/maxV*100)}%;background:var(--red);opacity:0.75;width:7px"></div>
-        <div class="bar" style="height:${(won[i]/maxV*100)}%;background:var(--green);opacity:0.85;width:7px"></div>
+function renderSettingsPage() {
+  const html = `
+    <div class="right-panel" style="border: none;">
+      <div class="tabs">
+        <div class="tab active">Settings</div>
       </div>
-    `;
-    salesChart.appendChild(col);
-    const lbl = document.createElement('div');
-    lbl.style.cssText = 'flex:1;text-align:center;font-size:9px;color:var(--text3);font-family:var(--mono)';
-    lbl.textContent = m;
-    salesLabels.appendChild(lbl);
-  });
-
-  const leadsStages = [['Qual.',21],['Nurture',23],['Handoff',7],['Negot.',15],['Awaiting',22]];
-  const leadsChart = document.getElementById('leadsChart');
-  const maxL = Math.max(...leadsStages.map(s=>s[1]));
-  leadsStages.forEach(([name, val]) => {
-    const col = document.createElement('div');
-    col.className = 'bar-col';
-    col.innerHTML = `
-      <div class="bar" style="height:${(val/maxL*100)}%;background:var(--green);width:100%;max-width:28px"></div>
-      <div class="bar-label">${name.substring(0,4)}</div>
-    `;
-    leadsChart.appendChild(col);
-  });
-}
-
-function renderDashboard() {
-  renderAnalyticsCharts();
-}
-
-function renderTimeline() {
-  const timelineData = [
-    {type:'call',color:'var(--blue-bg)',title:'Call with Alexander Wilson',desc:'Discussed Q3 renewal terms',time:'Today · 2:15 PM',icon:'📞'},
-    {type:'email',color:'var(--accent-bg)',title:'Proposal sent',desc:'$128,000 ACV, 3-year term',time:'Yesterday · 11:00 AM',icon:'✉'},
-    {type:'meeting',color:'var(--green-bg)',title:'Onsite meeting',desc:'Roadmap presentation to 4 stakeholders',time:'Jun 12 · 10:00 AM',icon:'👥'},
-    {type:'note',color:'var(--amber-bg)',title:'Internal note',desc:'SLA uptime concern flagged',time:'Jun 10 · 4:30 PM',icon:'📝'},
-    {type:'deal',color:'var(--green-bg)',title:'Deal closed — Phase 1',desc:'Phase 1 implementation signed',time:'Jun 2 · 9:00 AM',icon:'🎯'},
-  ];
-  const tl = document.getElementById('timeline-items');
-  timelineData.forEach((item, i) => {
-    const div = document.createElement('div');
-    div.className = 'timeline-item';
-    div.innerHTML = `
-      ${i < timelineData.length - 1 ? '<div class="timeline-line"></div>' : ''}
-      <div class="timeline-dot" style="background:${item.color}">${item.icon}</div>
-      <div class="timeline-body">
-        <div class="timeline-title">${item.title}</div>
-        <div class="timeline-desc">${item.desc}</div>
-        <div class="timeline-time">${item.time}</div>
+      
+      <div class="tab-content">
+        <div class="section-title">Account Settings</div>
+        <div style="font-size: 13px; color: #999;">Settings coming soon</div>
       </div>
-    `;
-    tl.appendChild(div);
-  });
+    </div>
+  `;
+  
+  document.getElementById('content-area').innerHTML = html;
 }
 
-function renderComms() {
-  const comms = [
-    {type:'Email',subject:'RE: Q3 Renewal Proposal',preview:'Thank you for the proposal. Reviewing internally...',date:'Today · 9:41 AM'},
-    {type:'Email',subject:'Webinar Invite: Platform Updates',preview:'Join us for platform features preview on June 28th...',date:'Jun 15 · 2:00 PM'},
-    {type:'Phone',subject:'Inbound call — Alexander Wilson',preview:'18 min · Topics: SLA, Pricing, Q4 roadmap',date:'Jun 14 · 11:15 AM'},
-    {type:'Email',subject:'Support Case #4821 Resolved',preview:'SSO configuration case resolved.',date:'Jun 12 · 5:30 PM'},
-  ];
-  const ci = document.getElementById('comm-items');
-  comms.forEach(c => {
-    const div = document.createElement('div');
-    div.className = 'comm-item';
-    div.innerHTML = `
-      <div class="comm-header">
-        <span class="comm-type" style="color:${c.type==='Email'?'var(--accent2)':'var(--green)'}">${c.type}</span>
-        <span class="comm-date">${c.date}</span>
+function switchTab(el, tab) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  
+  const tabContents = {
+    analytics: `
+      <div class="stat-grid">
+        <div class="stat">
+          <div class="stat-label">Annual Revenue</div>
+          <div class="stat-value">$2.4M</div>
+          <div class="stat-sub">+12% vs last year</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Total Deals</div>
+          <div class="stat-value">4</div>
+          <div class="stat-sub">2 active</div>
+        </div>
       </div>
-      <div class="comm-subject">${c.subject}</div>
-      <div class="comm-preview">${c.preview}</div>
-    `;
-    ci.appendChild(div);
-  });
-}
-
-function renderOpps() {
-  const opps = [
-    {name:'Enterprise License Renewal — FY25',stage:'Proposal',amount:'$128,000',prob:75,color:'var(--blue)'},
-    {name:'Implementation Services — Phase 2',stage:'Negotiation',amount:'$48,000',prob:55,color:'var(--amber)'},
-    {name:'Add-on: Analytics Module',stage:'Discovery',amount:'$22,000',prob:30,color:'var(--accent)'},
-    {name:'Support Upgrade — Platinum Tier',stage:'Closing',amount:'$18,500',prob:90,color:'var(--green)'},
-  ];
-  const oi = document.getElementById('opp-items');
-  opps.forEach(o => {
-    const div = document.createElement('div');
-    div.className = 'opportunity-row';
-    div.innerHTML = `
-      <div class="opp-name">${o.name}</div>
-      <span class="opp-stage" style="background:${o.color}22;color:${o.color}">${o.stage}</span>
-      <div class="progress-mini"><div class="progress-fill" style="width:${o.prob}%;background:${o.color}"></div></div>
-      <span class="opp-prob">${o.prob}%</span>
-      <span class="opp-amount">${o.amount}</span>
-    `;
-    oi.appendChild(div);
-  });
-}
-
-function renderPipeline() {
-  const stages = [
-    {name:'Discovery',count:3,fill:40,c:'var(--accent)'},
-    {name:'Proposal',count:2,fill:25,c:'var(--blue)'},
-    {name:'Negotiation',count:1,fill:20,c:'var(--amber)'},
-    {name:'Closing',count:1,fill:15,c:'var(--green)'},
-  ];
-  const pl = document.getElementById('pipeline');
-  stages.forEach(s => {
-    const div = document.createElement('div');
-    div.className = 'pipeline-stage';
-    div.innerHTML = `
-      <div class="pipeline-stage-name">${s.name}</div>
-      <div class="pipeline-count">${s.count}</div>
-      <div class="pipeline-bar"><div class="pipeline-fill" style="width:${s.fill}%;background:${s.c}"></div></div>
-    `;
-    pl.appendChild(div);
-  });
-}
-
-function renderLeads() {
-  const leads = [
-    {name:'Sarah Chen',company:'Nexus Digital',amount:'$45K',status:'hot',ibg:'var(--red-bg)',itc:'var(--red)',initials:'SC'},
-    {name:'Marcus Reid',company:'Altitude SaaS',amount:'$28K',status:'warm',ibg:'var(--amber-bg)',itc:'var(--amber)',initials:'MR'},
-    {name:'Priya Nair',company:'CloudBridge Inc.',amount:'$62K',status:'new',ibg:'var(--accent-bg)',itc:'var(--accent2)',initials:'PN'},
-    {name:'Tom Okafor',company:'DataStream Co.',amount:'$19K',status:'cold',ibg:'var(--blue-bg)',itc:'var(--blue)',initials:'TO'},
-  ];
-  const li = document.getElementById('lead-items');
-  leads.forEach(l => {
-    const div = document.createElement('div');
-    div.className = 'lead-item';
-    div.innerHTML = `
-      <div class="lead-avatar" style="background:${l.ibg};color:${l.itc}">${l.initials}</div>
-      <div>
-        <div class="lead-name">${l.name}</div>
-        <div class="lead-company">${l.company}</div>
+      
+      <div class="section-title">Open Opportunities</div>
+      <div class="opportunity-item">
+        <div class="opp-name">Enterprise License Renewal</div>
+        <div class="badge-stage">Proposal</div>
+        <div class="opp-amount">$128K</div>
       </div>
-      <span class="lead-amount">${l.amount}</span>
-      <span class="lead-status status-${l.status}">${l.status.charAt(0).toUpperCase()+l.status.slice(1)}</span>
-    `;
-    li.appendChild(div);
-  });
-}
-
-function renderService() {
-  const cases = [
-    {title:'SSO Login failure on Okta integration',priority:'High',status:'Open',age:'3 days'},
-    {title:'Data export exceeding 10k row limit',priority:'Medium',status:'In Progress',age:'5 days'},
-    {title:'Dashboard widgets not loading on Safari',priority:'Low',status:'Open',age:'1 day'},
-  ];
-  const si = document.getElementById('service-items');
-  cases.forEach(c => {
-    const div = document.createElement('div');
-    div.className = 'comm-item';
-    div.innerHTML = `
-      <div class="comm-header">
-        <span class="comm-type" style="color:${c.priority==='High'?'var(--red)':c.priority==='Medium'?'var(--amber)':'var(--text3)'}">${c.priority}</span>
-        <span class="lead-status ${c.status==='Open'?'status-hot':c.status==='In Progress'?'status-warm':'status-cold'}">${c.status}</span>
+      <div class="opportunity-item">
+        <div class="opp-name">Implementation Services</div>
+        <div class="badge-stage">Negotiation</div>
+        <div class="opp-amount">$48K</div>
       </div>
-      <div class="comm-subject">${c.title}</div>
-      <div class="comm-preview" style="font-family:var(--mono)">Opened ${c.age} ago</div>
-    `;
-    si.appendChild(div);
-  });
-}
-
-function renderNews() {
-  const news = [
-    {source:'Bloomberg',headline:'OptimasYs Technologies secures $120M Series D',date:'Jun 16, 2025'},
-    {source:'TechCrunch',headline:'How consulting firms are redefining SaaS adoption in 2025',date:'Jun 14, 2025'},
-    {source:'Forbes',headline:'Alexander Wilson named to Forbes Cloud 100 Rising Stars',date:'Jun 11, 2025'},
-    {source:'Reuters',headline:'Consulting sector outpaces S&P 500 for third quarter',date:'Jun 9, 2025'},
-  ];
-  const ni = document.getElementById('news-items');
-  news.forEach(n => {
-    const div = document.createElement('div');
-    div.className = 'news-item';
-    div.innerHTML = `<div class="news-source">${n.source}</div><div class="news-headline">${n.headline}</div><div class="news-date">${n.date}</div>`;
-    ni.appendChild(div);
-  });
-}
-
-/* SIDEBAR NAVIGATION */
-document.querySelectorAll('.nav-item').forEach(item=>{
-  item.onclick = function() {
-    renderPage(this.getAttribute('data-page'));
+    `,
+    timeline: `
+      <div class="section-title">Recent Activity</div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-body">
+          <div class="timeline-title">Call with Alexander Wilson</div>
+          <div class="timeline-desc">Discussed Q3 renewal terms</div>
+          <div class="timeline-time">Today · 2:15 PM</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-body">
+          <div class="timeline-title">Proposal sent</div>
+          <div class="timeline-desc">$128,000 ACV, 3-year term</div>
+          <div class="timeline-time">Yesterday · 11:00 AM</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-body">
+          <div class="timeline-title">Meeting scheduled</div>
+          <div class="timeline-desc">Roadmap presentation to 4 stakeholders</div>
+          <div class="timeline-time">Jun 12 · 10:00 AM</div>
+        </div>
+      </div>
+    `,
+    opportunities: `
+      <div class="section-title">Active Deals</div>
+      <div class="opportunity-item">
+        <div class="opp-name">Enterprise License Renewal — FY25</div>
+        <div class="badge-stage">Proposal</div>
+        <div class="opp-amount">$128K</div>
+      </div>
+      <div class="opportunity-item">
+        <div class="opp-name">Implementation Services — Phase 2</div>
+        <div class="badge-stage">Negotiation</div>
+        <div class="opp-amount">$48K</div>
+      </div>
+      <div class="opportunity-item">
+        <div class="opp-name">Add-on: Analytics Module</div>
+        <div class="badge-stage">Discovery</div>
+        <div class="opp-amount">$22K</div>
+      </div>
+      <div class="opportunity-item">
+        <div class="opp-name">Support Upgrade — Platinum Tier</div>
+        <div class="badge-stage">Closing</div>
+        <div class="opp-amount">$18.5K</div>
+      </div>
+    `
   };
-});
+  
+  document.getElementById('tab-content').innerHTML = tabContents[tab] || '';
+}
 
-/* INIT PAGE */
-renderPage('accounts');
+// Initialize
+goToPage('accounts');
 </script>
 </body>
 </html>
