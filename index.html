@@ -54,6 +54,11 @@
       flex-direction: column;
       flex-shrink: 0;
       padding: 0;
+      transition: transform 0.3s ease, width 0.3s ease;
+      z-index: 1000;
+    }
+    .sidebar.collapsed {
+      width: 60px;
     }
     .sidebar-logo {
       padding: 18px 20px;
@@ -64,6 +69,14 @@
       font-weight: 600;
       font-size: 15px;
       letter-spacing: -0.3px;
+      position: relative;
+    }
+    .sidebar.collapsed .sidebar-logo {
+      padding: 18px 12px;
+      justify-content: center;
+    }
+    .sidebar.collapsed .sidebar-logo span:not(.logo-icon) {
+      display: none;
     }
     .logo-icon {
       width: 28px; height: 28px;
@@ -71,6 +84,36 @@
       border-radius: 7px;
       display: flex; align-items: center; justify-content: center;
       font-size: 13px; font-weight: 700; color: #fff;
+      flex-shrink: 0;
+    }
+    .sidebar-toggle {
+      position: absolute;
+      right: 10px;
+      top: 18px;
+      width: 28px;
+      height: 28px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text2);
+      transition: all 0.15s;
+    }
+    .sidebar-toggle:hover {
+      background: var(--bg4);
+      color: var(--text);
+    }
+    .sidebar-toggle svg {
+      width: 14px;
+      height: 14px;
+    }
+    .sidebar-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px 0;
     }
     .sidebar-section {
       padding: 12px 12px 4px;
@@ -79,6 +122,9 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--text3);
+    }
+    .sidebar.collapsed .sidebar-section {
+      display: none;
     }
     .nav-item {
       display: flex;
@@ -93,6 +139,18 @@
       font-weight: 400;
       transition: all 0.15s;
       user-select: none;
+      white-space: nowrap;
+    }
+    .sidebar.collapsed .nav-item {
+      margin: 1px 4px;
+      padding: 8px 8px;
+      justify-content: center;
+    }
+    .sidebar.collapsed .nav-item span:not(.nav-badge) {
+      display: none;
+    }
+    .sidebar.collapsed .nav-item svg {
+      margin: 0;
     }
     .nav-item:hover { background: var(--bg3); color: var(--text); }
     .nav-item.active { background: var(--accent-bg); color: var(--accent2); font-weight: 500; }
@@ -108,16 +166,28 @@
       border-radius: 10px;
       font-family: var(--mono);
     }
+    .sidebar.collapsed .nav-badge {
+      position: absolute;
+      right: -5px;
+      top: -5px;
+      margin: 0;
+    }
     .sidebar-footer {
       margin-top: auto;
       padding: 12px;
       border-top: 1px solid var(--border);
+    }
+    .sidebar.collapsed .sidebar-footer {
+      padding: 8px 4px;
     }
     .user-row {
       display: flex; align-items: center; gap: 10px;
       padding: 8px;
       border-radius: var(--radius);
       cursor: pointer;
+    }
+    .sidebar.collapsed .user-row {
+      justify-content: center;
     }
     .user-row:hover { background: var(--bg3); }
     .avatar {
@@ -126,6 +196,10 @@
       display: flex; align-items: center; justify-content: center;
       font-size: 11px; font-weight: 600; color: #fff;
       flex-shrink: 0;
+    }
+    .sidebar.collapsed .user-name,
+    .sidebar.collapsed .user-role {
+      display: none;
     }
     .user-name { font-size: 13px; font-weight: 500; }
     .user-role { font-size: 11px; color: var(--text3); }
@@ -262,6 +336,7 @@
       border-bottom: 1px solid var(--border);
       background: var(--bg);
       flex-shrink: 0;
+      overflow-x: auto;
     }
     .tab {
       padding: 14px 14px 12px;
@@ -426,72 +501,268 @@
     }
     .icon-btn:hover { background: var(--bg4); color: var(--text); }
     svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* MOBILE RESPONSIVE */
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        flex-direction: row;
+        padding: 0;
+        position: relative;
+      }
+      .sidebar.collapsed {
+        width: 100%;
+        height: auto;
+      }
+      .sidebar-logo {
+        padding: 12px 16px;
+        border-bottom: none;
+        border-right: 1px solid var(--border);
+        flex: 0 0 auto;
+      }
+      .sidebar.collapsed .sidebar-logo {
+        padding: 12px 16px;
+      }
+      .sidebar-logo span:not(.logo-icon) {
+        display: inline;
+      }
+      .sidebar-content {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--bg2);
+        flex-direction: column;
+        border-bottom: 1px solid var(--border);
+        max-height: 400px;
+        overflow-y: auto;
+        z-index: 999;
+      }
+      .sidebar-content.show {
+        display: flex;
+      }
+      .sidebar-section {
+        padding: 12px 16px 4px;
+        display: block;
+      }
+      .nav-item {
+        margin: 1px 0;
+        padding: 10px 16px;
+        border-radius: 0;
+        white-space: normal;
+        justify-content: flex-start;
+      }
+      .sidebar.collapsed .nav-item span:not(.nav-badge) {
+        display: inline;
+      }
+      .sidebar.collapsed .nav-item {
+        margin: 1px 0;
+        padding: 10px 16px;
+        justify-content: flex-start;
+      }
+      .sidebar-footer {
+        display: none;
+      }
+      .sidebar-toggle {
+        position: static;
+        margin-left: auto;
+        margin-right: 16px;
+      }
+      .sidebar-toggle svg {
+        width: 18px;
+        height: 18px;
+      }
+      .main {
+        flex: 1;
+        height: auto;
+      }
+      .content {
+        flex-direction: column;
+      }
+      .left-panel {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        max-height: 300px;
+        padding: 12px;
+      }
+      .right-panel {
+        flex: 1;
+      }
+      .topbar {
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 8px 12px;
+        height: auto;
+      }
+      .topbar-title {
+        flex: 1;
+        min-width: 100%;
+        font-size: 14px;
+      }
+      .topbar-tags {
+        flex: 1;
+        min-width: 100%;
+        margin-left: 0;
+      }
+      .search-bar {
+        width: auto;
+        flex: 1;
+        margin: 0;
+        min-width: 150px;
+      }
+      .topbar-actions {
+        flex: 1;
+        min-width: 100%;
+        margin-left: 0;
+      }
+      .btn {
+        padding: 5px 10px;
+        font-size: 12px;
+      }
+      .tab-content {
+        padding: 12px;
+      }
+      .analytics-grid {
+        grid-template-columns: 1fr;
+      }
+      .stat-card {
+        padding: 12px;
+      }
+      .stat-num {
+        font-size: 20px;
+      }
+      .bar-chart {
+        height: 60px;
+      }
+      .pipeline {
+        flex-wrap: wrap;
+      }
+      .pipeline-stage {
+        flex: 1;
+        min-width: 120px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .sidebar-logo {
+        flex: 0 0 auto;
+        min-width: auto;
+      }
+      .topbar {
+        flex-direction: column;
+        gap: 6px;
+        padding: 8px;
+      }
+      .search-bar {
+        width: 100%;
+        margin: 0;
+      }
+      .topbar-actions {
+        flex: 1;
+        min-width: 100%;
+        margin-left: 0;
+      }
+      .btn {
+        padding: 4px 8px;
+        font-size: 11px;
+      }
+      .left-panel {
+        max-height: 250px;
+        padding: 8px;
+      }
+      .tab-content {
+        padding: 8px;
+      }
+      .stat-card {
+        padding: 10px;
+      }
+      .stat-num {
+        font-size: 18px;
+      }
+      .nav-item {
+        padding: 8px 12px;
+        font-size: 12px;
+      }
+    }
   </style>
 </head>
 <body>
 
 <!-- SIDEBAR -->
-<aside class="sidebar">
+<aside class="sidebar" id="sidebar">
   <div class="sidebar-logo">
     <div class="logo-icon">N</div>
-    NexusCRM
+    <span>NexusCRM</span>
+    <div class="sidebar-toggle" id="sidebar-toggle">
+      <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </div>
   </div>
 
-  <div class="sidebar-section">Main</div>
-  <div class="nav-item" data-page="dashboard">
-    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-    Dashboard
-  </div>
-  <div class="nav-item active" data-page="accounts">
-    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-    Accounts
-    <span class="nav-badge">248</span>
-  </div>
-  <div class="nav-item" data-page="contacts">
-    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-    Contacts
-  </div>
-  <div class="nav-item" data-page="leads">
-    <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-    Leads
-    <span class="nav-badge">12</span>
-  </div>
+  <div class="sidebar-content" id="sidebar-content">
+    <div class="sidebar-section">Main</div>
+    <div class="nav-item" data-page="dashboard">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      <span>Dashboard</span>
+    </div>
+    <div class="nav-item active" data-page="accounts">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span>Accounts</span>
+      <span class="nav-badge">248</span>
+    </div>
+    <div class="nav-item" data-page="contacts">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>Contacts</span>
+    </div>
+    <div class="nav-item" data-page="leads">
+      <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      <span>Leads</span>
+      <span class="nav-badge">12</span>
+    </div>
 
-  <div class="sidebar-section">Sales</div>
-  <div class="nav-item" data-page="opportunities">
-    <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-    Opportunities
-  </div>
-  <div class="nav-item" data-page="orders">
-    <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>
-    Orders
-  </div>
-  <div class="nav-item" data-page="invoices">
-    <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-    Invoices
-  </div>
+    <div class="sidebar-section">Sales</div>
+    <div class="nav-item" data-page="opportunities">
+      <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      <span>Opportunities</span>
+    </div>
+    <div class="nav-item" data-page="orders">
+      <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>
+      <span>Orders</span>
+    </div>
+    <div class="nav-item" data-page="invoices">
+      <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+      <span>Invoices</span>
+    </div>
 
-  <div class="sidebar-section">Support</div>
-  <div class="nav-item" data-page="activities">
-    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-    Activities
-  </div>
-  <div class="nav-item" data-page="cases">
-    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-    Cases
-    <span class="nav-badge" style="background:var(--red-bg);color:var(--red)">5</span>
-  </div>
-  <div class="nav-item" data-page="contracts">
-    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-    Contracts
-  </div>
+    <div class="sidebar-section">Support</div>
+    <div class="nav-item" data-page="activities">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <span>Activities</span>
+    </div>
+    <div class="nav-item" data-page="cases">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <span>Cases</span>
+      <span class="nav-badge" style="background:var(--red-bg);color:var(--red)">5</span>
+    </div>
+    <div class="nav-item" data-page="contracts">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      <span>Contracts</span>
+    </div>
 
-  <div class="sidebar-footer">
-    <div class="user-row">
-      <div class="avatar">AL</div>
-      <div>
-        <div class="user-name">Andy Lloyd</div>
-        <div class="user-role">Sales Manager</div>
+    <div class="sidebar-footer">
+      <div class="user-row">
+        <div class="avatar">AL</div>
+        <div>
+          <div class="user-name">Andy Lloyd</div>
+          <div class="user-role">Sales Manager</div>
+        </div>
       </div>
     </div>
   </div>
@@ -527,9 +798,9 @@ const pages = {
       <div class="topbar">
         <div class="back-btn">
           <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-          Accounts
+          <span>Accounts</span>
         </div>
-        <div style="width:1px;height:20px;background:var(--border)"></div>
+        <div style="width:1px;height:20px;background:var(--border);display:none" class="topbar-divider"></div>
         <div class="topbar-title">OptimasYs Technologies</div>
         <div class="topbar-tags">
           <span class="tag vip">VIP</span>
@@ -602,7 +873,7 @@ function getAccountsLeftPanel() {
     <div class="divider"></div>
     <div class="contact-card"><div class="contact-card-header">
       Primary Contact
-      <svg style="width:13px;height:13px" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      <svg style="width:13px;height:13px" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="14"/></svg>
     </div>
     <div class="contact-row"><div class="contact-avatar">AW</div><div><div class="contact-name">Alexander Wilson</div><div class="contact-meta">CEO · United States</div></div></div>
     <div class="contact-info"><div class="contact-info-row"><span>Born</span><span>20 May 1988 · 37</span></div>
@@ -627,7 +898,7 @@ const accountsTabContents = {
   analytics: `<div class="analytics-grid" id="analytics-main"></div>`,
   timeline: `<div class="section-header"><div class="section-title">Activity Timeline</div><button class="btn btn-ghost" style="font-size:12px;padding:5px 10px">+ Log Activity</button></div><div id="timeline-items"></div>`,
   communication: `<div class="section-header"><div class="section-title">Communications</div><button class="btn btn-ghost" style="font-size:12px;padding:5px 10px">Compose</button></div><div id="comm-items"></div>`,
-  sales: `<div class="section-header"><div class="section-title">Open Opportunities</div><span class="section-action">View all →</span></div><div id="opp-items"></div><div style="margin-top:20px"><div class="section-header"><div class="section-title">Pipeline Overview</div></div><div class="pipeline" id="pipeline"></div></div>`,
+  sales: `<div class="section-header"><div class="section-title">Open Opportunities</div><span class="section-action">View all →</span></div><div id="opp-items"></div><div style="margin-top:20px"><div class="section-header"><div class="section-title">Sales Pipeline</div></div><div class="pipeline" id="pipeline"></div></div>`,
   leads: `<div class="section-header"><div class="section-title">Leads</div><button class="btn btn-primary" style="font-size:12px;padding:5px 12px">+ New Lead</button></div><div id="lead-items"></div>`,
   service: `<div class="section-header"><div class="section-title">Open Cases</div></div><div id="service-items"></div>`,
   news: `<div class="section-header"><div class="section-title">Company News</div></div><div id="news-items"></div>`
@@ -718,9 +989,9 @@ function renderAnalyticsCharts(source) {
         <div style="flex:1">
           <div style="font-size:11px;color:var(--text3);margin-bottom:8px">By Source</div>
           <div style="display:flex;flex-direction:column;gap:8px">
-            <div><div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-bottom:3px"><span>Email</span><span>66%</span></div><div style="height:4px;background:var(--bg4);border-radius:2px"><div style="height:100%;width:66%;background:var(--accent);border-radius:2px"></div></div></div>
-            <div><div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-bottom:3px"><span>Phone</span><span>20%</span></div><div style="height:4px;background:var(--bg4);border-radius:2px"><div style="height:100%;width:20%;background:var(--blue);border-radius:2px"></div></div></div>
-            <div><div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-bottom:3px"><span>Portal</span><span>14%</span></div><div style="height:4px;background:var(--bg4);border-radius:2px"><div style="height:100%;width:14%;background:var(--amber);border-radius:2px"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-bottom:3px"><span>Email</span><span>66%</span></div><div style="height:4px;background:var(--bg3);border-radius:2px;overflow:hidden"><div style="height:100%;width:66%;background:var(--accent);border-radius:2px"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-bottom:3px"><span>Phone</span><span>20%</span></div><div style="height:4px;background:var(--bg3);border-radius:2px;overflow:hidden"><div style="height:100%;width:20%;background:var(--blue);border-radius:2px"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-bottom:3px"><span>Portal</span><span>14%</span></div><div style="height:4px;background:var(--bg3);border-radius:2px;overflow:hidden"><div style="height:100%;width:14%;background:var(--green);border-radius:2px"></div></div></div>
           </div>
         </div>
       </div>
@@ -847,6 +1118,7 @@ function renderPipeline() {
     {name:'Closing',count:1,fill:15,c:'var(--green)'},
   ];
   const pl = document.getElementById('pipeline');
+  if (!pl) return;
   stages.forEach(s => {
     const div = document.createElement('div');
     div.className = 'pipeline-stage';
@@ -919,6 +1191,41 @@ function renderNews() {
     div.innerHTML = `<div class="news-source">${n.source}</div><div class="news-headline">${n.headline}</div><div class="news-date">${n.date}</div>`;
     ni.appendChild(div);
   });
+}
+
+/* SIDEBAR TOGGLE */
+const sidebarToggle = document.getElementById('sidebar-toggle');
+const sidebar = document.getElementById('sidebar');
+const sidebarContent = document.getElementById('sidebar-content');
+
+sidebarToggle.addEventListener('click', function(e) {
+  e.stopPropagation();
+  sidebar.classList.toggle('collapsed');
+  sidebarContent.classList.toggle('show');
+  localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
+});
+
+// Close sidebar when clicking on nav items (mobile)
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', function() {
+    if (window.innerWidth <= 768) {
+      sidebarContent.classList.remove('show');
+    }
+  });
+});
+
+// Close sidebar when clicking outside
+document.addEventListener('click', function(e) {
+  if (!sidebar.contains(e.target) && sidebarContent.classList.contains('show')) {
+    if (window.innerWidth <= 768) {
+      sidebarContent.classList.remove('show');
+    }
+  }
+});
+
+// Restore sidebar state from localStorage
+if (localStorage.getItem('sidebarCollapsed') === 'true') {
+  sidebar.classList.add('collapsed');
 }
 
 /* SIDEBAR NAVIGATION */
